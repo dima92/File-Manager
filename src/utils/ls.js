@@ -1,9 +1,17 @@
-import {readdir} from 'fs/promises'
-import * as path from 'path'
+import {readdir} from 'fs/promises';
+import {resolve} from "path";
+import getCurrentDirectory from './currentDirectory.js'
 
-async function ls(dir) {
-  const ls = await readdir(path.join(dir))
-  console.log(ls)
-}
+const ls = async () => {
+  const {cwd} = process
+  try {
+    const curDirectory = resolve(cwd())
+    const files = await readdir(curDirectory)
+    console.table(files)
+    getCurrentDirectory()
+  } catch (e) {
+    console.error('Operation failed')
+  }
+};
 
-export default ls
+export default ls;

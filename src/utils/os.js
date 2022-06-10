@@ -1,36 +1,33 @@
-import os from 'os'
-import {stdout} from 'process'
+import {cpus, EOL, userInfo} from 'os';
+import getCurrentDirectory from './currentDirectory.js'
 
-function osUtil(param) {
-  switch (param) {
-    case 'architecture': {
-      stdout.write(`${param}: ${os.arch()}\n`)
-      break
+const osUtil = async ([param]) => {
+  const {arch} = process
+  try {
+    if (!param) {
+      throw new Error(`parameter is not specified`)
     }
-    case 'cpus': {
-      const cpus = os.cpus()
-      console.table(cpus.map(({speed, model}) => {
-        const speedHz = (speed / 1000).toFixed(2)
-        return {model, speed: speedHz}
-      }))
-      break
+
+    const {username, homedir} = userInfo()
+    const cpusInfo = cpus().map(({model, speed}) => ({model, speed}))
+
+    const osInfo = {
+      '--EOL': JSON.stringify(EOL),
+      '--cpus': cpusInfo,
+      '--homedir': homedir,
+      '--username': username,
+      '--architecture': arch
     }
-    case 'EOL': {
-      stdout.write(`${param}: ${JSON.stringify(os.EOL)}\n`)
-      break
+
+    if (!osInfo[param]) {
+      throw new Error(`parameter is not specified`)
     }
-    case 'homedir': {
-      stdout.write(`${param}: ${os.homedir()}\n`)
-      break
-    }
-    case 'username': {
-      stdout.write(`${param}: ${os.userInfo().username}\n`)
-      break
-    }
-    default: {
-      stdout.write('Invalid input\n')
-    }
+
+    console.table(osInfo[param])
+    getCurrentDirectory()
+  } catch (e) {
+    console.error('Operation failed')
   }
-}
+};
 
-export default osUtil
+export default osUtil;

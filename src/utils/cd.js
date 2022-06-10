@@ -1,21 +1,12 @@
-import * as path from 'path'
-import {access} from 'fs/promises'
+import getCurrentDirectory from './currentDirectory.js'
 
-async function cd(currentDirectory, pathToDirectory) {
-  const root = path.parse(currentDirectory).root.toLowerCase()
+export default async ([pathToDirectory]) => {
+  const {chdir} = process
   try {
-    if (pathToDirectory.startsWith(root)) {
-      await access(pathToDirectory)
-      return pathToDirectory
-    } else {
-      const fullPath = path.join(currentDirectory, pathToDirectory.slice(1))
-      await access(path.join(fullPath))
-      return path.join(fullPath)
-    }
-  } catch (err) {
-    console.log('Operation failed')
-    return currentDirectory
+    chdir(pathToDirectory)
+    getCurrentDirectory()
+  } catch
+    (err) {
+    console.error('Operation failed');
   }
 }
-
-export default cd
