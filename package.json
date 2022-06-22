@@ -1,0 +1,21 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dima92/File-Manager.git"
+  },
+  "keywords": [],
+  "author": "Dmitry Tkachenko <dima-tkachenko@mail.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dima92/File-Manager/issues"
+  },
+  "homepage": "https://github.com/dima92/File-Manager#readme"
+}
